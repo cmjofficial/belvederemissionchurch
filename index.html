@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Belvedere Mission Church</title>
+   <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+  <style>
+    :root {
+      --color-dark-brown: #4B2E2E;
+      --color-warm-brown: #8B5E3C;
+      --color-beige: #F5F5DC;
+      --color-yellow: #FFD700;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--color-beige);
+      color: var(--color-dark-brown);
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    nav {
+      background: var(--color-dark-brown);
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .logo {
+      color: var(--color-beige);
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 1rem;
+    }
+
+    nav ul li a {
+      color: var(--color-beige);
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: var(--color-yellow);
+    }
+
+    /* Hero Section */
+    header {
+      position: relative;
+      background: var(--color-warm-brown);
+      color: var(--color-beige);
+      text-align: center;
+      padding: 5rem 1rem 3rem;
+      overflow: hidden;
+    }
+
+    .logo-img {
+      max-width: 120px;
+      margin-bottom: 1rem;
+      z-index: 2;
+      position: relative;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    header p, .btn {
+      position: relative;
+      z-index: 2;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--color-yellow);
+      color: var(--color-dark-brown);
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--color-dark-brown);
+      color: var(--color-beige);
+    }
+
+    /* Service Schedule Blocks */
+    .schedule-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 2rem auto;
+      max-width: 900px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .schedule-card {
+      background: var(--color-beige);
+      color: var(--color-dark-brown);
+      padding: 1.2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      font-weight: bold;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .schedule-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+      background: var(--color-yellow);
+      color: var(--color-dark-brown);
+    }
+
+    /* Floating Particles */
+    .particles {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 6px; height: 6px;
+      background: rgba(255, 255, 200, 0.7);
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(100vh) scale(0.5); opacity: 1; }
+      to { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* Sections */
+    section {
+      padding: 3rem 1rem;
+      text-align: center;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--color-warm-brown);
+    }
+
+    .ministry-container {
+      max-width: 700px;
+      margin: 3rem auto;
+      text-align: center;
+    }
+
+    .ministry-item {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+
+    .ministry-header {
+      width: 100%;
+      background: var(--color-warm-brown);
+      color: var(--color-beige);
+      padding: 1rem;
+      font-weight: bold;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .ministry-header:hover {
+      background: var(--color-dark-brown);
+    }
+
+    .ministry-content {
+      max-height: 0;
+      overflow: hidden;
+      background: var(--color-beige);
+      color: var(--color-dark-brown);
+      padding: 0 1rem;
+      transition: max-height 0.4s ease-out, padding 0.3s ease;
+    }
+
+    .ministry-content.open {
+      max-height: 400px; /* adjust for slider */
+      padding: 1rem;
+    }
+
+    .swiper {
+      width: 100%;
+      height: 250px;
+      margin-top: 1rem;
+    }
+
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    }
+
+    #contact {
+      text-align: center;
+      padding: 50px 20px;
+      background: #f5f5dc; /* beige bg */
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .contact-info a {
+      text-decoration: none;
+      color: #4b2e2e; /* dark brown */
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.3s ease;
+    }
+
+    .contact-info a:hover {
+      color: #8b5e3c; /* warm brown hover */
+    }
+
+    .contact-info i {
+      font-size: 1.5rem;
+    }
+
+
+    /* Footer */
+    footer {
+      background: var(--color-dark-brown);
+      color: var(--color-beige);
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <a href="#" class="logo">Belvedere Mission Church</a>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#ministries">Ministries</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <header id="home">
+    <div class="particles" id="particles"></div>
+    <img src="bmc.png" alt="Church Logo" class="logo-img">
+    <h1>Welcome to Belvedere Mission Church</h1>
+    <p>Join us in weekly gatherings — as we grow together in Christ and share His love.</p>
+
+    <div class="schedule-container">
+      <div class="schedule-card">Sunday Service <br><strong>9:00 - 10:30 AM</strong></div>
+      <div class="schedule-card">Monday Devotion <br><strong>6:00 PM Onwards</strong></div>
+      <div class="schedule-card">Wednesday Prayer Meeting <br><strong>6:00 PM Onwards</strong></div>
+      <div class="schedule-card">Women's Prayer <br><strong>9:00 - 11:00 AM</strong></div>
+      <div class="schedule-card">Dawnwatch Prayer <br><strong>6:00 AM Onwards</strong></div>
+      <div class="schedule-card">Discipleship <br><strong>3:00 - 4:00 PM</strong></div>
+    </div>
+
+    <a href="#about" class="btn">Learn More</a>
+  </header>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About Us</h2>
+    <p>
+      We are a Christ-centered community committed to worship, discipleship,
+      and service. Our mission is to share the Gospel and help people grow in faith.
+    </p>
+  </section>
+
+  <!-- Ministries Section -->
+  <section id="ministries">
+    <h2>Our Ministries</h2>
+    <div class="ministry-container">
+      <div class="ministry-item">
+        <button class="ministry-header">Youth Ministry</button>
+        <div class="ministry-content">
+          <p>
+            A ministry for young people to grow in faith, build friendships, and
+            serve God together. Activities include youth fellowships, Bible
+            studies, worship nights, and outreach programs.
+          </p>
+
+          <!-- Swiper -->
+          <div class="swiper youth-swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="youth1.jpg" alt="Youth Activity 1"></div>
+              <div class="swiper-slide"><img src="youth2.jpg" alt="Youth Activity 2"></div>
+              <div class="swiper-slide"><img src="youth3.jpg" alt="Youth Activity 3"></div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+
+        <button class="ministry-header">Children Ministry</button>
+        <div class="ministry-content">
+          <p>
+            The Children’s Ministry nurtures young hearts in faith,
+             teaching them God’s Word and helping them grow in 
+             Christ at an early age.
+          </p>
+
+          <!-- Swiper -->
+          <div class="swiper youth-swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="worship1.jpg" alt="Worship Activity 1"></div>
+              <div class="swiper-slide"><img src="worship2.jpg" alt="Worship Activity 2"></div>
+              <div class="swiper-slide"><img src="worship3.jpg" alt="Worship Activity 3"></div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+         <button class="ministry-header">Worship Team</button>
+        <div class="ministry-content">
+          <p>
+            The Worship Team is dedicated to glorifying God by leading 
+            the congregation in Christ-centered praise and worship. 
+            Through music, singing, and instrumental excellence, the 
+            team seeks to create an atmosphere where people can experience
+             God’s presence, prepare their hearts to receive His Word, 
+             and grow in deeper relationship with Him
+          </p>
+
+          <!-- Swiper -->
+          <div class="swiper youth-swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="worship1.jpg" alt="Worship Activity 1"></div>
+              <div class="swiper-slide"><img src="worship2.jpg" alt="Worship Activity 2"></div>
+              <div class="swiper-slide"><img src="worship3.jpg" alt="Worship Activity 3"></div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <!-- Contact Us Section -->
+<section id="contact">
+  <h2>Contact Us</h2>
+  <div class="contact-info">
+    <a href="https://web.facebook.com/BelvedereMissionChurchPage" target="_blank">
+      <i class="fab fa-facebook"></i>
+    </a>
+    <a href="tel:+639669364034">
+      <i class="fas fa-phone"></i>
+    </a>
+    <a href="mailto:belvederemissionchurch2021@gmail.com">
+      <i class="fas fa-envelope"></i>
+    </a>
+    <a href="https://www.youtube.com/@Belvedere_Mission_Church" target="_blank">
+      <i class="fab fa-youtube"></i>
+    </a>
+  </div>
+</section>
+
+<!-- Add Font Awesome -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Belvedere Mission Church. All rights reserved.</p>
+  </footer>
+
+  <!-- JS for Particles + Accordion + Swiper -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    // Floating particles
+    const particlesContainer = document.getElementById("particles");
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement("div");
+      particle.classList.add("particle");
+      particle.style.left = Math.random() * 100 + "vw";
+      particle.style.animationDuration = 5 + Math.random() * 5 + "s";
+      particle.style.animationDelay = Math.random() * 5 + "s";
+      particle.style.opacity = Math.random();
+      particlesContainer.appendChild(particle);
+    }
+
+    // Accordion toggle
+    document.querySelectorAll(".ministry-header").forEach(button => {
+      button.addEventListener("click", () => {
+        const content = button.nextElementSibling;
+        content.classList.toggle("open");
+      });
+    });
+
+    // Swiper init (soft autoplay carousel)
+    const youthSwiper = new Swiper(".youth-swiper", {
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      speed: 800,
+      effect: "slide",
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
+  </script>
+
+</body>
+</html>
